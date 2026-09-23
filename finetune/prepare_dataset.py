@@ -1,6 +1,7 @@
 """
-Convert your own code (Go/JS/Python files, past PR diffs, code reviews, design notes)
-into an instruction-tuning dataset (Alpaca-style JSONL) for fine-tuning.
+Convert curated code examples into an instruction-tuning dataset
+(Alpaca-style JSONL) for fine-tuning. See CLAUDE.md in this folder for the
+dataset-quality rules this project follows before adding examples.
 
 Usage:
     python prepare_dataset.py --src ./my_code_samples --out dataset.jsonl
@@ -14,11 +15,18 @@ blocks separated by "---" like:
     ### OUTPUT
     func reverseList(head *Node) *Node { ... }
 
+Target domains (per CLAUDE.md, in priority order): Go, Python, JavaScript/
+TypeScript + React (frontend), PostgreSQL, and system-design/architecture
+reasoning. Cover all five — don't only collect examples from one language.
+
 If you don't have curated examples yet, the simplest bootstrap is:
-  1. Take your best past PRs / code answers.
+  1. Take your best past PRs / code answers / bug fixes across the domains above.
   2. For each, write one line describing the task (instruction) and paste
-     the final code as output.
-  3. Aim for 300-1000 examples minimum for a noticeable fine-tune effect.
+     the final, verified-correct code as output.
+  3. Prefer real, working examples over synthetic ones — quality beats
+     quantity (500 verified examples beat 5000 unverified ones).
+  4. Aim for 300-1000 examples minimum for a noticeable fine-tune effect,
+     spread across all five domains.
 """
 import argparse
 import json

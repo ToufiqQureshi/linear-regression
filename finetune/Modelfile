@@ -1,4 +1,4 @@
-FROM ./my-coder-model.q4_k_m.gguf
+FROM ./glm4-coder-q4_k_m.gguf
 
 TEMPLATE """Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
 
